@@ -17,6 +17,14 @@ const SearchParams = () => {
   const results = useQuery(["search", requestParams], fetchSearch);
   const pets = results?.data?.pets ?? [];
 
+  if (!results.data) {
+    return (
+      <div className="loading-pane">
+        <h2 className="loader">🌀</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="search-params">
       <form
@@ -70,13 +78,7 @@ const SearchParams = () => {
         </label>
         <button>Submit</button>
       </form>
-      {!results.data ? (
-        <div className="loading-pane">
-          <h2 className="loader">🌀</h2>
-        </div>
-      ) : (
-        <Results pets={pets} />
-      )}
+      <Results pets={pets} />
     </div>
   );
 };
